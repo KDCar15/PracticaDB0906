@@ -2,7 +2,12 @@ CREATE DATABASE EmpresaSQL
 
 USE EmpresaSQL
 
-CREATE TABLE TDepartamento
+CREATE SCHEMA SLocacion;
+GO
+CREATE SCHEMA STrabajo;
+GO
+
+CREATE TABLE SLocacion.TDepartamento
 (
 	nDepartamentoID INT
 		IDENTITY(1,1)
@@ -23,7 +28,7 @@ CREATE TABLE TDepartamento
 );
 GO
 
-CREATE TCargo
+CREATE TABLE STrabajo.TCargo
 (
 	nCargoID INT
 		IDENTITY(1,1)
@@ -44,7 +49,7 @@ CREATE TCargo
 );
 GO
 
-CREATE TABLE TEmpleado
+CREATE TABLE STrabajo.TEmpleado
 (
 	nEmpleadoID INT
 		IDENTITY(1,1)
@@ -83,7 +88,7 @@ CREATE TABLE TEmpleado
 );
 GO
 
-CREATE TABLE TProyecto
+CREATE TABLE STrabajo.TProyecto
 (
 	nProyectoID INT
 		IDENTITY(1,1)
@@ -105,7 +110,7 @@ CREATE TABLE TProyecto
 );
 GO
 
-CREATE TABLE TEmpleadoProyecto
+CREATE TABLE STrabajo.TEmpleadoProyecto
 (
 	nEmpleadoID INT
 	,nProyectoID INT
@@ -130,7 +135,7 @@ GO
 
 -- Alter tables
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 ADD
 (
 	cEmail NVARCHAR(50)
@@ -140,17 +145,17 @@ ADD
 );
 GO
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 	ALTER COLUMN cNombre
 	NVARCHAR(100);
 GO
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 	ALTER COLUMN cApellido
 	NVARCHAR(100);
 GO
 	
-ALTER TABLE TEmpleado ADD
+ALTER TABLE STrabajo.TEmpleado ADD
 (
 	cDireccion NVARCHAR(50)
 	,nEdad INT
@@ -164,15 +169,15 @@ ALTER TABLE TEmpleado ADD
 );
 GO
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 	DROP COLUMN cDireccion;
 GO
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 	ALTER COLUMN cTelefono VARCHAR(20);
 GO
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 ADD
 (
 	cGenero VARCHAR(10)
@@ -181,7 +186,7 @@ ADD
 		CHECK(cGenero IN ('Masculino', 'Femenino'))
 );
 
-ALTER TABLE TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 ADD
 (
 	dFechaNacimiento DATE
@@ -190,7 +195,7 @@ ADD
 
 -- Tabla sucursal
 
-CREATE TABLE TSucursal
+CREATE TABLE SLocacion.TSucursal
 (
 	nSucursalID INT
 		IDENTITY(1,1)
@@ -201,3 +206,5 @@ CREATE TABLE TSucursal
 		PRIMARY KEY(nSucursalID)
 );
 GO
+
+-- Inserciones
