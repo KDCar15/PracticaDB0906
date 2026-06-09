@@ -134,27 +134,56 @@ ALTER TABLE TEmpleado
 ADD
 (
 	cEmail NVARCHAR(50)
-	,ck_email CHECK(cEmail like "%@%.%")
-	
 	,cTelefono NVARCHAR(50)
+	
+	,ck_email CHECK(cEmail like "%@%.%")
 );
 GO
 
 ALTER TABLE TEmpleado
 	ALTER COLUMN cNombre
-	NVARCHAR(100)
+	NVARCHAR(100);
+GO
 
 ALTER TABLE TEmpleado
 	ALTER COLUMN cApellido
-	NVARCHAR(100)
+	NVARCHAR(100);
+GO
 	
 ALTER TABLE TEmpleado ADD
 (
 	cDireccion NVARCHAR(50)
 	,nEdad INT
+	,bActivo BIT
+		DEFAULT(1)
 	
 	,CONSTRAINT ck_edad
 		CHECK(nEdad BETWEEN 18 AND 65)
 	,CONSTRAINT uq_email
 		UNIQUE(cEmail)
-)
+);
+GO
+
+ALTER TABLE TEmpleado
+	DROP COLUMN cDireccion;
+GO
+
+ALTER TABLE TEmpleado
+	ALTER COLUMN cTelefono VARCHAR(20);
+GO
+
+ALTER TABLE TEmpleado
+ADD
+(
+	cGenero VARCHAR(10)
+	
+	,CONSTRAINT ck_cGenero
+		CHECK(cGenero IN ('Masculino', 'Femenino'))
+);
+
+ALTER TABLE TEmpleado
+ADD
+(
+	dFechaNacimiento DATE
+		NOT NULL
+);
