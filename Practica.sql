@@ -127,3 +127,34 @@ CREATE TABLE TEmpleadoProyecto
 		REFERENCES TProyecto(nProyectoID)
 );
 GO
+
+-- Alter tables
+
+ALTER TABLE TEmpleado
+ADD
+(
+	cEmail NVARCHAR(50)
+	,ck_email CHECK(cEmail like "%@%.%")
+	
+	,cTelefono NVARCHAR(50)
+);
+GO
+
+ALTER TABLE TEmpleado
+	ALTER COLUMN cNombre
+	NVARCHAR(100)
+
+ALTER TABLE TEmpleado
+	ALTER COLUMN cApellido
+	NVARCHAR(100)
+	
+ALTER TABLE TEmpleado ADD
+(
+	cDireccion NVARCHAR(50)
+	,nEdad INT
+	
+	,CONSTRAINT ck_edad
+		CHECK(nEdad BETWEEN 18 AND 65)
+	,CONSTRAINT uq_email
+		UNIQUE(cEmail)
+)
