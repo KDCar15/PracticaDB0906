@@ -82,3 +82,25 @@ CREATE TABLE TEmpleado
 		CHECK(nSalario >= 300)
 );
 GO
+
+CREATE TABLE TProyecto
+(
+	nProyectoID INT
+		IDENTITY(1,1)
+	,cNombreProyecto NVARCHAR(50)
+	,dFechaInicio DATE
+		NOT NULL
+	,dFechaFinalizacion DATE
+		NOT NULL
+	
+	,dCreatedAt DATETIME
+		DEFAULT(GETDATE())
+	,dUpdatedAt 
+		NULL
+	,dDeletedAt
+		NULL
+		
+	,CONSTRAINT pk_proyectoid
+		PRIMARY KEY(nProyectoID)
+);
+GO
