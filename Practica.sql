@@ -22,3 +22,24 @@ CREATE TABLE TDepartamento
 		UNIQUE(cNombreDepartamento)
 );
 GO
+
+CREATE TCargo
+(
+	nCargoID INT
+		IDENTITY(1,1)
+	,cNombreCargo NVARCHAR(50)
+		NOT NULL
+	
+	,dCreatedAt DATETIME
+		DEFAULT(GETDATE())
+	,dUpdatedAt 
+		NULL
+	,dDeletedAt
+		NULL
+	
+	,CONSTRAINT pk_cargoid
+		PRIMARY KEY(nCargoID)
+	,CONSTRAINT uq_nombrecargo
+		UNIQUE(cNombreCargo)
+);
+GO
