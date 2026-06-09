@@ -104,3 +104,26 @@ CREATE TABLE TProyecto
 		PRIMARY KEY(nProyectoID)
 );
 GO
+
+CREATE TABLE TEmpleadoProyecto
+(
+	nEmpleadoID INT
+	,nProyectoID INT
+	
+	,dCreatedAt DATETIME
+		DEFAULT(GETDATE())
+	,dUpdatedAt 
+		NULL
+	,dDeletedAt
+		NULL
+	
+	,CONSTRAINT pk_empleadoproyecto
+		PRIMARY KEY(nEmpleadoID, nProyectoID)
+	,CONSTRAINT fk_empleadoid
+		FOREIGN KEY(nEmpleadoID)
+		REFERENCES TEmpleado(nEmpleadoID)
+	,CONSTRAINT 
+		FOREIGN KEY(nProyectoID)
+		REFERENCES TProyecto(nProyectoID)
+);
+GO
