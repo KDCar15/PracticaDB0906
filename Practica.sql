@@ -187,3 +187,17 @@ ADD
 	dFechaNacimiento DATE
 		NOT NULL
 );
+
+-- Tabla sucursal
+
+CREATE TABLE TSucursal
+(
+	nSucursalID INT
+		IDENTITY(1,1)
+	,cDireccion NVARCHAR(1,1)
+	,cCiudad NVARCHAR(1,1)
+	
+	,CONSTRAINT pk_sucursal
+		PRIMARY KEY(nSucursalID)
+);
+GO
