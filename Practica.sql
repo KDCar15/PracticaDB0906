@@ -279,18 +279,18 @@ GO
 INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
-('011', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01');
+('010-032312-0404F', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01');
 
 INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID,.nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
-('012', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05');
+('010-321434-0034F', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05');
 
 -- Salario negativo
 INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
-('013', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
+('666-666666-6666S', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
 );
 
 -- Update
@@ -324,3 +324,23 @@ WHERE nProyectoID=1;
 
 INSERT INTO STrabajo.TEmpleadoProyecto
 VALUES(1,3);
+
+-- Delete
+
+DELETE FROM STrabajo.TEmpleado
+WHERE cNIF LIKE '001-010190-1001A';
+
+DELETE FROM STrabajo.TEmpleado
+WHERE bActivo = 0;
+
+DELETE FROM STrabajo.TProyecto
+WHERE nProyectoID = 3;
+
+DELETE FROM STrabajo.TEmpleadoProyecto
+WHERE nEmpleadoID = 1;
+
+DELETE FROM SLocacion.TDepartamento
+WHERE
+	nDepartamentoID = 5
+AND NOT EXISTS
+	(SELECT 1 FROM STrabajo.TEmpleado E WHERE (E.nDepartamentoID = 5));
