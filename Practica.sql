@@ -155,7 +155,9 @@ ALTER TABLE STrabajo.TEmpleado
 ADD
 (
 	cEmail NVARCHAR(50)
+		NOT NULL
 	,cTelefono NVARCHAR(50)
+		NULL
 	
 	,CONSTRAINT ck_email CHECK(cEmail like '%@%.%')
 );
@@ -209,6 +211,7 @@ ADD
 	dFechaNacimiento DATE
 		NOT NULL
 );
+GO
 
 -- Tabla sucursal
 
