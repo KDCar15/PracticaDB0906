@@ -275,6 +275,20 @@ VALUES
 ('Centro Comercial', 'León');
 GO
 
--- Consultas básicas
+-- Inserciones parte 2
+INSERT INTO STrabajo.TEmpleado
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
+VALUES
+('011', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01');
 
+INSERT INTO STrabajo.TEmpleado
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID,.nSalario, nEdad, cGenero, dFechaNacimiento)
+VALUES
+('012', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05');
 
+-- Salario negativo
+INSERT INTO STrabajo.TEmpleado
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
+VALUES
+('013', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
+);
