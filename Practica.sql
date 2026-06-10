@@ -1,6 +1,20 @@
+USE master;
+GO
+
+IF EXISTS(SELECT 1 FROM sys.databases WHERE name = 'EmpresaSQL')
+BEGIN
+    ALTER DATABASE EmpresaSQL
+    SET SINGLE_USER
+    WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE EmpresaSQL;
+END
+GO
+
 CREATE DATABASE EmpresaSQL
+GO
 
 USE EmpresaSQL
+GO
 
 CREATE SCHEMA SLocacion;
 GO
@@ -56,7 +70,7 @@ CREATE TABLE STrabajo.TEmpleado
 	,nDepartamentoID INT
 	,nCargoID INT
 	
-	,nSalario DECIMAL 
+	,nSalario DECIMAL(10,2)
 		NOT NULL
 	,cNIF NVARCHAR(15)
 		NOT NULL 
@@ -98,13 +112,13 @@ CREATE TABLE STrabajo.TProyecto
 	,dFechaInicio DATE
 		NOT NULL
 	,dFechaFinalizacion DATE
-		NOT NULL
+		NULL
 	
 	,dCreatedAt DATETIME
 		DEFAULT(GETDATE())
-	,dUpdatedAt 
+	,dUpdatedAt DATETIME
 		NULL
-	,dDeletedAt
+	,dDeletedAt DATETIME
 		NULL
 		
 	,CONSTRAINT pk_proyectoid
@@ -119,9 +133,9 @@ CREATE TABLE STrabajo.TEmpleadoProyecto
 	
 	,dCreatedAt DATETIME
 		DEFAULT(GETDATE())
-	,dUpdatedAt 
+	,dUpdatedAt DATETIME
 		NULL
-	,dDeletedAt
+	,dDeletedAt DATETIME
 		NULL
 	
 	,CONSTRAINT pk_empleadoproyecto
@@ -143,7 +157,7 @@ ADD
 	cEmail NVARCHAR(50)
 	,cTelefono NVARCHAR(50)
 	
-	,ck_email CHECK(cEmail like '%@%.%')
+	,CONSTRAINT ck_email CHECK(cEmail like '%@%.%')
 );
 GO
 
@@ -187,6 +201,7 @@ ADD
 	,CONSTRAINT ck_cGenero
 		CHECK(cGenero IN ('M', 'F'))
 );
+GO
 
 ALTER TABLE STrabajo.TEmpleado
 ADD
@@ -238,7 +253,7 @@ VALUES
 ,('002-020292-2002B','María',	'Gómez', 	3, 3,	1200,	'maria@empresa.com',	'8888-2222', 33, 'F', '1992-02-02')
 ,('003-030395-3003C','Carlos',	'López', 	4, 4,	900,	'carlos@empresa.com',	'8888-3333', 30, 'M', '1995-03-03')
 ,('004-040445-4004D','Ana',		'Lopez', 	4, 4,	1100,	'ana@empresa.com',		'8888-4444', 40, 'F', '1985-04-04')
-,('005-050582-5005E','Pedro',	'Martinez',	5, 5,	700,,	'pedro@empresa.com'		'8888-5555', 24, 'M', '2001-05-05')
+,('005-050582-5005E','Pedro',	'Martinez',	5, 5,	700,	'pedro@empresa.com',	'8888-5555', 24, 'M', '2001-05-05')
 ,('006-060672-6006F','Sofia',	'Garcia', 	1, 3, 	1300,	'sofia@empresa.com',	'8888-6666', 32, 'F', '1993-06-06')
 ,('007-070789-7007G','Luis',	'Gonzalez',	2, 4,	950,	'luis@empresa.com',		'8888-7777', 27, 'M', '1998-07-07')
 ,('008-080890-8008H','Elena',	'Gutierrez',3, 2,	1400,	'elena@empresa.com',	'8888-8888', 38, 'F', '1987-08-08')
@@ -280,71 +295,86 @@ INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
 ('010-032312-0404F', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01');
+GO
 
 INSERT INTO STrabajo.TEmpleado
-(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID,.nSalario, nEdad, cGenero, dFechaNacimiento)
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
 ('010-321434-0034F', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05');
+GO
 
--- Salario negativo
+-- Salario negativo: Debe generar error
 INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
 VALUES
 ('666-666666-6666S', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
 );
-
+GO
 -- Update
 
 UPDATE STrabajo.TEmpleado
 SET nSalario = nSalario * 1.10;
+GO
 
 UPDATE STrabajo.TEmpleado
 SET nSalario = nSalario * 1.20
 WHERE nDepartamentoID = 1;
+GO
 
 UPDATE STrabajo.TEmpleado
 SET cEmail='nuevo@empresa.com'
 WHERE nEmpleadoID=1;
+GO
 
 UPDATE STrabajo.TEmpleado
 SET nCargoID=3
 WHERE nEmpleadoID=2;
+GO
 
 UPDATE STrabajo.TEmpleado
 SET nDepartamentoID=4
 WHERE nEmpleadoID IN (3,4);
+GO
 
 UPDATE STrabajo.TEmpleado
 SET bActivo=0
 WHERE nSalario < 500;
+GO
 
 UPDATE STrabajo.TProyecto
 SET dFechaFinalizacion='2026-12-31'
 WHERE nProyectoID=1;
+GO
 
 INSERT INTO STrabajo.TEmpleadoProyecto
 VALUES(1,3);
-
+GO
 -- Delete
 
 DELETE FROM STrabajo.TEmpleado
 WHERE cNIF LIKE '001-010190-1001A';
+GO
 
 DELETE FROM STrabajo.TEmpleado
 WHERE bActivo = 0;
+GO
 
+DELETE FROM STrabajo.TEmpleadoProyecto
+WHERE nProyectoID = 3;
 DELETE FROM STrabajo.TProyecto
 WHERE nProyectoID = 3;
+GO
 
 DELETE FROM STrabajo.TEmpleadoProyecto
 WHERE nEmpleadoID = 1;
+GO
 
 DELETE FROM SLocacion.TDepartamento
 WHERE
 	nDepartamentoID = 5
 AND NOT EXISTS
 	(SELECT 1 FROM STrabajo.TEmpleado E WHERE (E.nDepartamentoID = 5));
-
+GO
 -- Consultas
 
 SELECT *
@@ -498,9 +528,9 @@ GO
 
 -- Administracion de objetos
 
-ALTER TABLE Trabajo.TEmpleado
+ALTER TABLE STrabajo.TEmpleado
 DROP CONSTRAINT 
-	k_edad;
+	ck_edad;
 GO
 
 ALTER TABLE STrabajo.TEmpleado
@@ -530,6 +560,11 @@ DROP TABLE SLocacion.TSucursal;
 GO
 
 USE master;
+GO
+
+ALTER DATABASE EmpresaSQL
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
 GO
 
 DROP DATABASE EmpresaSQL;
