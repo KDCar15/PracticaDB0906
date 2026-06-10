@@ -344,3 +344,154 @@ WHERE
 	nDepartamentoID = 5
 AND NOT EXISTS
 	(SELECT 1 FROM STrabajo.TEmpleado E WHERE (E.nDepartamentoID = 5));
+
+-- Consultas
+
+SELECT *
+FROM STrabajo.TEmpleado
+ORDER BY cApellido;
+GO
+
+SELECT *
+FROM STrabajo.TEmpleado
+WHERE nSalario > 1000;
+GO
+
+SELECT *
+FROM STrabajo.TEmpleado
+WHERE bActivo = 1;
+GO
+
+SELECT *
+FROM STrabajo.TEmpleado
+WHERE YEAR(dFechaContratacion) = YEAR(GETDATE());
+GO
+
+SELECT
+	E.cNombre
+	,E.cApellido,
+	,D.cNombreDepartamento
+FROM 
+	STrabajo.TEmpleado E
+INNER JOIN 
+	SLocacion.TDepartamento D
+	ON E.nDepartamentoID=D.nDepartamentoID;
+GO
+
+SELECT
+	E.cNombre
+	,E.cApellido
+	,C.cNombreCargo
+FROM 
+	STrabajo.TEmpleado E
+INNER JOIN 
+	STrabajo.TCargo C
+	ON E.nCargoID = C.nCargoID;
+GO
+
+SELECT
+	E.cNombre
+	,P.cNombreProyecto
+FROM 
+	STrabajo.TEmpleado E
+INNER JOIN 
+	STrabajo.TEmpleadoProyecto EP
+	ON E.nEmpleadoID=EP.nEmpleadoID
+INNER JOIN 
+	STrabajo.TProyecto P
+	ON EP.nProyectoID=P.nProyectoID;
+GO
+
+SELECT
+	D.cNombreDepartamento,
+	COUNT(*) Cantidad
+FROM
+	STrabajo.TEmpleado E
+INNER JOIN
+	SLocacion.TDepartamento D
+ON
+	E.nDepartamentoID=D.nDepartamentoID
+GROUP BY
+	D.cNombreDepartamento;
+GO
+
+SELECT
+	D.cNombreDepartamento,
+	AVG(nSalario) Promedio
+FROM
+	STrabajo.TEmpleado E
+INNER JOIN
+	SLocacion.TDepartamento D
+ON
+	E.nDepartamentoID=D.nDepartamentoID
+GROUP BY
+	D.cNombreDepartamento;
+GO
+
+SELECT
+	D.cNombreDepartamento,
+	MAX(nSalario) SalarioMaximo,
+	MIN(nSalario) SalarioMinimo
+FROM
+	STrabajo.TEmpleado E
+INNER JOIN 
+	SLocacion.TDepartamento D
+ON 
+	E.nDepartamentoID=D.nDepartamentoID
+GROUP BY
+	D.cNombreDepartamento;
+GO
+
+SELECT
+	P.cNombreProyecto,
+	COUNT(*) TotalEmpleados
+FROM
+	STrabajo.TEmpleadoProyecto EP
+INNER JOIN
+	STrabajo.TProyecto P
+	ON EP.nProyectoID=P.nProyectoID
+GROUP BY
+	P.cNombreProyecto HAVING COUNT(*) > 2;
+GO
+
+SELECT *
+FROM 
+	STrabajo.TEmpleado
+WHERE
+	cApellido LIKE 'G%';
+GO
+
+SELECT *
+FROM
+	STrabajo.TEmpleado
+ORDER BY
+	nSalario DESC;
+GO
+
+SELECT 
+	TOP 3 *
+FROM 
+	STrabajo.TEmpleado
+ORDER BY
+	nSalario DESC;
+GO
+
+SELECT *
+FROM 
+	STrabajo.TEmpleado
+WHERE 
+	nEdad BETWEEN 25 AND 40;
+GO
+
+SELECT
+	COUNT(*) TotalActivos
+FROM 
+	STrabajo.TEmpleado
+WHERE 
+	bActivo=1;
+GO
+
+SELECT 
+	COUNT(*) TotalProyectos
+FROM STrabajo.TProyecto;
+GO
