@@ -16,9 +16,9 @@ CREATE TABLE SLocacion.TDepartamento
 		
 	,dCreatedAt DATETIME
 		DEFAULT(GETDATE())
-	,dUpdatedAt 
+	,dUpdatedAt DATETIME
 		NULL
-	,dDeletedAt
+	,dDeletedAt DATETIME
 		NULL
 	
 	,CONSTRAINT pk_departamento
@@ -37,9 +37,9 @@ CREATE TABLE STrabajo.TCargo
 	
 	,dCreatedAt DATETIME
 		DEFAULT(GETDATE())
-	,dUpdatedAt 
+	,dUpdatedAt DATETIME
 		NULL
-	,dDeletedAt
+	,dDeletedAt DATETIME
 		NULL
 	
 	,CONSTRAINT pk_cargoid
@@ -59,7 +59,7 @@ CREATE TABLE STrabajo.TEmpleado
 	,nSalario DECIMAL 
 		NOT NULL
 	,cNIF NVARCHAR(15)
-		NOT NULL
+		NOT NULL 
 	,cNombre NVARCHAR(50)
 		NOT NULL
 	,cApellido NVARCHAR(50) 
@@ -69,19 +69,21 @@ CREATE TABLE STrabajo.TEmpleado
 		
 	,dCreatedAt DATETIME
 		DEFAULT(GETDATE())
-	,dUpdatedAt
+	,dUpdatedAt DATETIME
 		NULL
-	,dDeletedAt
+	,dDeletedAt DATETIME
 		NULL
 	
 	,CONSTRAINT pk_empleadoid
 		PRIMARY KEY(nEmpleadoID)
 	,CONSTRAINT fk_departamentoid
 		FOREIGN KEY(nDepartamentoID)
-		REFERENCES TDepartamento(nDepartamentoID)
+		REFERENCES SLocacion.TDepartamento(nDepartamentoID)
 	,CONSTRAINT fk_cargoid
 		FOREIGN KEY(nCargoID)
-		REFERENCES TCargo(nCargoID)
+		REFERENCES STrabajo.TCargo(nCargoID)
+	,CONSTRAINT uq_nif
+		UNIQUE(cNIF)
 		
 	,CONSTRAINT ck_salario
 		CHECK(nSalario >= 300)
@@ -126,10 +128,10 @@ CREATE TABLE STrabajo.TEmpleadoProyecto
 		PRIMARY KEY(nEmpleadoID, nProyectoID)
 	,CONSTRAINT fk_empleadoid
 		FOREIGN KEY(nEmpleadoID)
-		REFERENCES TEmpleado(nEmpleadoID)
-	,CONSTRAINT 
+		REFERENCES STrabajo.TEmpleado(nEmpleadoID)
+	,CONSTRAINT fk_proyectoid
 		FOREIGN KEY(nProyectoID)
-		REFERENCES TProyecto(nProyectoID)
+		REFERENCES STrabajo.TProyecto(nProyectoID)
 );
 GO
 
@@ -141,7 +143,7 @@ ADD
 	cEmail NVARCHAR(50)
 	,cTelefono NVARCHAR(50)
 	
-	,ck_email CHECK(cEmail like "%@%.%")
+	,ck_email CHECK(cEmail like '%@%.%')
 );
 GO
 
@@ -199,8 +201,8 @@ CREATE TABLE SLocacion.TSucursal
 (
 	nSucursalID INT
 		IDENTITY(1,1)
-	,cDireccion NVARCHAR(1,1)
-	,cCiudad NVARCHAR(1,1)
+	,cDireccion NVARCHAR(50)
+	,cCiudad NVARCHAR(50)
 	
 	,CONSTRAINT pk_sucursal
 		PRIMARY KEY(nSucursalID)
