@@ -210,3 +210,52 @@ CREATE TABLE SLocacion.TSucursal
 GO
 
 -- Inserciones
+
+INSERT INTO SLocacion.TDepartamento
+(cNombreDepartamento)
+VALUES
+('Recursos Humanos')
+,('Finanzas')
+,('Tecnología')
+,('Ventas');
+GO
+
+INSERT INTO STrabajo.TCargo
+(cNombreCargo)
+VALUES
+('Gerente')
+,('Analista')
+,('Programador')
+,('Vendedor');
+GO
+
+INSERT INTO STrabajo.TEmpleado
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, cEmail, cTelefono, nEdad, cGenero, dFechaNacimiento)
+VALUES
+('001-010190-1001A', 'Juan', 'Pérez', 1, 1, 1500, 'juan@empresa.com', '8888-1111', 35, 'Masculino', '1990-01-01')
+,('002-020292-2002B', 'María', 'Gómez', 3, 3, 1200, 'maria@empresa.com', '8888-2222', 33, 'Femenino', '1992-02-02')
+,('003-030395-3003C', 'Carlos', 'López', 4, 4, 900, 'carlos@empresa.com', '8888-3333', 30, 'Masculino', '1995-03-03');
+GO
+
+INSERT INTO STrabajo.TProyecto
+(cNombreProyecto, dFechaInicio, dFechaFinalizacion)
+VALUES
+('Sistema ERP', '2025-01-01', '2025-12-31')
+,('Portal Web', '2025-03-01', '2025-09-30');
+GO
+
+INSERT INTO STrabajo.TEmpleadoProyecto
+(nEmpleadoID, nProyectoID)
+VALUES
+(1,1)
+,(2,1)
+,(2,2)
+,(3,2);
+GO
+
+INSERT INTO SLocacion.TSucursal
+(cDireccion, cCiudad)
+VALUES
+('Carretera a Masaya Km 8', 'Managua'),
+('Centro Comercial', 'León');
+GO
