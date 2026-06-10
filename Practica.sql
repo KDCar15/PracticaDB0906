@@ -292,3 +292,35 @@ INSERT INTO STrabajo.TEmpleado
 VALUES
 ('013', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
 );
+
+-- Update
+
+UPDATE STrabajo.TEmpleado
+SET nSalario = nSalario * 1.10;
+
+UPDATE STrabajo.TEmpleado
+SET nSalario = nSalario * 1.20
+WHERE nDepartamentoID = 1;
+
+UPDATE STrabajo.TEmpleado
+SET cEmail='nuevo@empresa.com'
+WHERE nEmpleadoID=1;
+
+UPDATE STrabajo.TEmpleado
+SET nCargoID=3
+WHERE nEmpleadoID=2;
+
+UPDATE STrabajo.TEmpleado
+SET nDepartamentoID=4
+WHERE nEmpleadoID IN (3,4);
+
+UPDATE STrabajo.TEmpleado
+SET bActivo=0
+WHERE nSalario < 500;
+
+UPDATE STrabajo.TProyecto
+SET dFechaFinalizacion='2026-12-31'
+WHERE nProyectoID=1;
+
+INSERT INTO STrabajo.TEmpleadoProyecto
+VALUES(1,3);
