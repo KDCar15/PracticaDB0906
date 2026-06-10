@@ -495,3 +495,42 @@ SELECT
 	COUNT(*) TotalProyectos
 FROM STrabajo.TProyecto;
 GO
+
+-- Administracion de objetos
+
+ALTER TABLE Trabajo.TEmpleado
+DROP CONSTRAINT 
+	k_edad;
+GO
+
+ALTER TABLE STrabajo.TEmpleado
+DROP CONSTRAINT 
+	uq_email;
+GO
+
+ALTER TABLE STrabajo.TEmpleado
+ADD CONSTRAINT 
+	ck_edad
+	CHECK(nEdad BETWEEN 18 AND 65);
+GO
+
+ALTER TABLE 
+	STrabajo.TEmpleado
+ADD CONSTRAINT 
+	uq_email
+	UNIQUE(cEmail);
+GO
+
+DROP TABLE STrabajo.TEmpleadoProyecto;
+DROP TABLE STrabajo.TProyecto;
+DROP TABLE STrabajo.TEmpleado;
+DROP TABLE STrabajo.TCargo;
+DROP TABLE SLocacion.TDepartamento;
+DROP TABLE SLocacion.TSucursal;
+GO
+
+USE master;
+GO
+
+DROP DATABASE EmpresaSQL;
+GO
