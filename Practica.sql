@@ -185,7 +185,7 @@ ADD
 	cGenero VARCHAR(10)
 	
 	,CONSTRAINT ck_cGenero
-		CHECK(cGenero IN ('Masculino', 'Femenino'))
+		CHECK(cGenero IN ('M', 'F'))
 );
 
 ALTER TABLE STrabajo.TEmpleado
@@ -217,7 +217,8 @@ VALUES
 ('Recursos Humanos')
 ,('Finanzas')
 ,('Tecnología')
-,('Ventas');
+,('Ventas')
+,('Marketing');
 GO
 
 INSERT INTO STrabajo.TCargo
@@ -226,31 +227,45 @@ VALUES
 ('Gerente')
 ,('Analista')
 ,('Programador')
-,('Vendedor');
+,('Vendedor')
+,('Asistente');
 GO
 
 INSERT INTO STrabajo.TEmpleado
 (cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, cEmail, cTelefono, nEdad, cGenero, dFechaNacimiento)
 VALUES
-('001-010190-1001A', 'Juan', 'Pérez', 1, 1, 1500, 'juan@empresa.com', '8888-1111', 35, 'Masculino', '1990-01-01')
-,('002-020292-2002B', 'María', 'Gómez', 3, 3, 1200, 'maria@empresa.com', '8888-2222', 33, 'Femenino', '1992-02-02')
-,('003-030395-3003C', 'Carlos', 'López', 4, 4, 900, 'carlos@empresa.com', '8888-3333', 30, 'Masculino', '1995-03-03');
+ ('001-010190-1001A','Juan', 	'Pérez', 	1, 1,	1500,	'juan@empresa.com',		'8888-1111', 35, 'M', '1990-01-01')
+,('002-020292-2002B','María',	'Gómez', 	3, 3,	1200,	'maria@empresa.com',	'8888-2222', 33, 'F', '1992-02-02')
+,('003-030395-3003C','Carlos',	'López', 	4, 4,	900,	'carlos@empresa.com',	'8888-3333', 30, 'M', '1995-03-03')
+,('004-040445-4004D','Ana',		'Lopez', 	4, 4,	1100,	'ana@empresa.com',		'8888-4444', 40, 'F', '1985-04-04')
+,('005-050582-5005E','Pedro',	'Martinez',	5, 5,	700,,	'pedro@empresa.com'		'8888-5555', 24, 'M', '2001-05-05')
+,('006-060672-6006F','Sofia',	'Garcia', 	1, 3, 	1300,	'sofia@empresa.com',	'8888-6666', 32, 'F', '1993-06-06')
+,('007-070789-7007G','Luis',	'Gonzalez',	2, 4,	950,	'luis@empresa.com',		'8888-7777', 27, 'M', '1998-07-07')
+,('008-080890-8008H','Elena',	'Gutierrez',3, 2,	1400,	'elena@empresa.com',	'8888-8888', 38, 'F', '1987-08-08')
+,('009-090919-9009I','Jose',	'Rivas',	4, 1,	2000,	'jose@empresa.com',		'8888-9999', 45, 'M', '1980-09-09')
+,('010-101099-1010J','Marta',	'Gaitan',	5, 5,	600,	'marta@empresa.com',	'8888-1010', 22, 'F', '2003-10-10');
 GO
 
 INSERT INTO STrabajo.TProyecto
 (cNombreProyecto, dFechaInicio, dFechaFinalizacion)
 VALUES
-('Sistema ERP', '2025-01-01', '2025-12-31')
-,('Portal Web', '2025-03-01', '2025-09-30');
+ ('Sistema ERP',		'2025-01-01',	'2025-12-31')
+,('Portal Web',			'2025-03-01',	'2025-09-30')
+,('Aplicacion Movil',	'2025-05-01',	'2025-11-30');
 GO
 
 INSERT INTO STrabajo.TEmpleadoProyecto
 (nEmpleadoID, nProyectoID)
 VALUES
-(1,1)
+ (1,1)
 ,(2,1)
 ,(2,2)
-,(3,2);
+,(3,2)
+,(4,2)
+,(5,2)
+,(6,3)
+,(7,3)
+,(8,3);
 GO
 
 INSERT INTO SLocacion.TSucursal
@@ -259,3 +274,7 @@ VALUES
 ('Carretera a Masaya Km 8', 'Managua'),
 ('Centro Comercial', 'León');
 GO
+
+-- Consultas básicas
+
+
