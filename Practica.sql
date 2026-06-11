@@ -72,7 +72,7 @@ CREATE TABLE STrabajo.TEmpleado
 	
 	,nSalario DECIMAL(10,2)
 		NOT NULL
-	,cNIF NVARCHAR(15)
+	,cNIF NVARCHAR(20)
 		NOT NULL 
 	,cNombre NVARCHAR(50)
 		NOT NULL
@@ -152,15 +152,12 @@ GO
 -- Alter tables
 
 ALTER TABLE STrabajo.TEmpleado
-ADD
-(
+ADD	
 	cEmail NVARCHAR(50)
 		NOT NULL
 	,cTelefono NVARCHAR(50)
 		NULL
-	
-	,CONSTRAINT ck_email CHECK(cEmail like '%@%.%')
-);
+	,CONSTRAINT ck_email CHECK(cEmail like '%@%.%');
 GO
 
 ALTER TABLE STrabajo.TEmpleado
@@ -174,7 +171,6 @@ ALTER TABLE STrabajo.TEmpleado
 GO
 	
 ALTER TABLE STrabajo.TEmpleado ADD
-(
 	cDireccion NVARCHAR(50)
 	,nEdad INT
 	,bActivo BIT
@@ -183,8 +179,7 @@ ALTER TABLE STrabajo.TEmpleado ADD
 	,CONSTRAINT ck_edad
 		CHECK(nEdad BETWEEN 18 AND 65)
 	,CONSTRAINT uq_email
-		UNIQUE(cEmail)
-);
+		UNIQUE(cEmail);
 GO
 
 ALTER TABLE STrabajo.TEmpleado
@@ -197,20 +192,16 @@ GO
 
 ALTER TABLE STrabajo.TEmpleado
 ADD
-(
 	cGenero VARCHAR(10)
 	
 	,CONSTRAINT ck_cGenero
-		CHECK(cGenero IN ('M', 'F'))
-);
+		CHECK(cGenero IN ('M', 'F'));
 GO
 
 ALTER TABLE STrabajo.TEmpleado
 ADD
-(
 	dFechaNacimiento DATE
-		NOT NULL
-);
+		NOT NULL;
 GO
 
 -- Tabla sucursal
@@ -295,23 +286,22 @@ GO
 
 -- Inserciones parte 2
 INSERT INTO STrabajo.TEmpleado
-(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento, cEmail)
 VALUES
-('010-032312-0404F', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01');
+('010-032312-0404F', 'Mario', 'Torres', 1, 2, 1000, 29, 'M', '1996-01-01', 'mariot@empresa.com');
 GO
 
 INSERT INTO STrabajo.TEmpleado
-(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento, cEmail)
 VALUES
-('010-321434-0034F', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05');
+('010-321434-0034F', 'Laura', 'Castillo', 2, 3, 1200, 26, 'F', '1999-05-05', 'laurac@empresa.com');
 GO
 
 -- Salario negativo: Debe generar error
 INSERT INTO STrabajo.TEmpleado
-(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento)
+(cNIF, cNombre, cApellido, nDepartamentoID, nCargoID, nSalario, nEdad, cGenero, dFechaNacimiento, cEmail)
 VALUES
-('666-666666-6666S', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01'
-);
+('666-666666-6666S', 'Error', 'Prueba', 1, 1, -500, 25, 'M', '2000-01-01', 'error@empresa.com');
 GO
 -- Update
 
@@ -349,8 +339,8 @@ SET dFechaFinalizacion='2026-12-31'
 WHERE nProyectoID=1;
 GO
 
-INSERT INTO STrabajo.TEmpleadoProyecto
-VALUES(1,3);
+INSERT INTO STrabajo.TEmpleadoProyecto (nEmpleadoID, nProyectoID)
+	VALUES(1,3);
 GO
 -- Delete
 
@@ -402,7 +392,7 @@ GO
 
 SELECT
 	E.cNombre
-	,E.cApellido,
+	,E.cApellido
 	,D.cNombreDepartamento
 FROM 
 	STrabajo.TEmpleado E
